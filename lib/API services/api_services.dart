@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:login/const/consttant.dart';
 import 'package:login/model/book_model.dart';
 
 class ApiServices {
   static Future<BookDetails> fetchProducts() async {
     var response = await http
-        .get(Uri.parse("https://www.googleapis.com/books/v1/volumes?q=http"));
+        .get(Uri.parse(getall));
 
     if (response.statusCode == 200) {
       return BookDetails.fromJson(json.decode(response.body));
@@ -16,7 +17,7 @@ class ApiServices {
 
   static Future<BookDetails> fetchProductsUsingId(String id) async {
     var response = await http
-        .get(Uri.parse("https://www.googleapis.com/books/v1/volumes?q=$id"));
+        .get(Uri.parse('$getById/$id'));
 
     if (response.statusCode == 200) {
       return BookDetails.fromJson(json.decode(response.body));
@@ -32,7 +33,7 @@ class ApiServices {
       'userId': 1,
     };
     final response = await http
-        .post(Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+        .post(Uri.parse(postUser),
         headers: {'Content-Type':'application/json'},
         body: jsonEncode(postData)
         );
